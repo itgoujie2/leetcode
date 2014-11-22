@@ -1,29 +1,31 @@
 public class Solution {
     public String addBinary(String a, String b) {
-        a = doReverse(a);
-        b = doReverse(b);
+        String temp;
         
-        int n = a.length() > b.length() ? a.length() : b.length();
+        if (b.length() > a.length()){
+            temp = a;
+            a = b;
+            b = temp;
+        }
         
-        int carry = 0;
-        String result = "";
-        for (int i=0; i<n; i++){
-            int ai = i < a.length() ? a.charAt(i) - '0' : 0;
-            int bi = i < b.length() ? b.charAt(i) - '0' : 0;
-            result += Integer.toString((ai + bi + carry) % 2);
-            carry = (ai + bi + carry) / 2;
+        StringBuilder result = new StringBuilder(a.length() + 1);
+        
+        int adding = 0;
+        int i = a.length() - 1;
+        int j = b.length() - 1;
+        int digit = 0;
+        while (i >= 0){
+            if (j >= 0){
+                digit = (a.charAt(i) - '0') + (b.charAt(j) - '0') + adding;    
+            }
+            else digit = (a.charAt(i) - '0') + adding;
+            adding = digit / 2;
+            result.append(digit % 2);
+            i--;
+            j--;
         }
-        if (carry == 1) result += "1";
-        return doReverse(result);
-    }
-    
-    public String doReverse(String s){
-        char[] tArray = s.toCharArray();
-        for (int i=0; i<tArray.length/2; i++){
-            char temp = tArray[i];
-            tArray[i] = tArray[tArray.length-1-i];
-            tArray[tArray.length-1-i] = temp;
-        }
-        return new String(tArray);
+        if (adding >= 1) result.append(adding);
+        
+        return result.reverse().toString();
     }
 }
