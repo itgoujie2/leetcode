@@ -1,37 +1,33 @@
 public class Solution {
     public String countAndSay(int n) {
-        String current = "1";
-        if (n == 1) return current;
+        StringBuilder temp = new StringBuilder();
+        String tracker = "1";
+        
         int i = 2;
         while (i <= n){
-            current = helper(current);
+            int j = 1;
+            char current = tracker.charAt(0);
+            int count = 1;
+            while (j < tracker.length()){
+                if (tracker.charAt(j) == current){
+                    count++;
+                    j++;
+                }
+                else{
+                    temp.append(count);
+                    temp.append(current);
+                    count = 1;
+                    current = tracker.charAt(j);
+                    j++;
+                }
+            }
+            temp.append(count);
+            temp.append(current);
+            tracker = temp.toString();
+            temp = temp.delete(0, temp.length());
             i++;
         }
-        return current;
-    }
-    
-    public String helper(String input){
-        char prev = input.charAt(0);
         
-        int i = 1;
-        String result = "";
-        int count = 1;
-        while (i < input.length()){
-            if (input.charAt(i) == prev){
-                count++;
-            }
-            else{
-                result += count;
-                result += prev;
-                prev = input.charAt(i);
-                count = 1;
-            }
-            i++;
-        }
-        
-        result += count;
-        result += prev;
-        
-        return result;
+        return tracker;
     }
 }
