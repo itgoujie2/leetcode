@@ -1,12 +1,23 @@
 public class Solution {
     public int removeDuplicates(int[] A) {
-        if (A.length == 0) return 0;
-        int index = 0;
-        for (int i=1; i<A.length; i++){
-            if (A[index] != A[i]){
-                A[++index] = A[i];
+        if (A == null || A.length == 0) return 0;
+        if (A.length == 1) return 1;
+        
+        int current = A[0];
+        int slow = 1;
+        int fast = 1;
+        while (fast < A.length){
+            if (A[fast] != current){
+                A[slow] = A[fast];
+                current = A[fast];
+                slow++;
+                fast++;
+            }
+            else{
+                fast++;
             }
         }
-        return index + 1;
+        
+        return slow;
     }
 }
