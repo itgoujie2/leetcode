@@ -1,13 +1,21 @@
 public class Solution {
     public int removeElement(int[] A, int elem) {
-        int index = 0;
+        if (A.length == 0) return 0;
         
-        for (int i=0; i<A.length; i++){
-            if (A[i] != elem){
-                A[index++] = A[i];
+        int slow = 0;
+        int fast = 0;
+        
+        while (fast < A.length){
+            if (A[fast] != elem){
+                A[slow] = A[fast];
+                slow++;
+                fast++;
+            }
+            else{
+                fast++;
             }
         }
         
-        return index;
+        return slow;
     }
 }
